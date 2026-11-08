@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>StatEditorMod</AssemblyName>
+    <Description>Edit all player stats and gold in Sun Haven</Description>
+    <Version>2.0.0</Version>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <Authors>AliesterEroan</Authors>
+    <Company>AliesterEroan</Company>
+    <Product>Sun Haven Stat Editor Mod</Product>
+    <!-- Set SUNHAVEN_DIR env var or pass /p:SunHavenDir="..." to your Sun Haven install folder -->
+    <SunHavenDir Condition="'$(SunHavenDir)' == ''">$(SUNHAVEN_DIR)</SunHavenDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="BepInEx.Core">
+      <HintPath>$(SunHavenDir)\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(SunHavenDir)\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(SunHavenDir)\Sun Haven_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(SunHavenDir)\Sun Haven_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(SunHavenDir)\Sun Haven_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(SunHavenDir)\Sun Haven_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SunHavenDir)' != ''">
+    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SunHavenDir)\BepInEx\plugins\StatEditorMod.dll&quot;" />
+  </Target>
+
+</Project>
